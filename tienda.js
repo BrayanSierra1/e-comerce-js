@@ -83,6 +83,31 @@ const confirmBuy = () => {
     }
 };
 
+const calcularInteres= (porcentaje,valor) => {
+    return porcentaje * valor / 100
+}
+
+const calcularCuota = (nCuotas, costo) => {
+    if (nCuotas===1){
+        return costo;
+    }
+    const valorCuota = costo / nCuotas;
+    const valorTotal = calcularInteres(1,valorCuota) + valorCuota;
+    return valorTotal;
+}
+
+const cuotas = (costoTotal) => {
+    const confirmarCuota =confirm('¿deseas pagar a cuotas?')
+
+    if(confirmarCuota){
+        const numeroCuotas = prompt("¿a cuantas cuotas te gustaria pagar?, 1, 2, 4 o 6")
+        const valorCuota = calcularCuota(Number(numeroCuotas),costoTotal)
+    alert ("el valor de la cuota es " + valorCuota)
+    }else{
+        alert('gracias por tu compra')
+    }
+}
+
 const finalizarBuy = (listadePrendas) =>{
     const cantidadTotal = carro.reduce((acc, item) => acc + item.cantidad, 0)
     const costoTotal = carro.reduce((acc, item) => acc + (item.cantidad * item.costo), 0)
@@ -90,8 +115,8 @@ const finalizarBuy = (listadePrendas) =>{
         +'\n\n' + listadePrendas.join('\n')
         +'\n\nTotal de prendas: '+cantidadTotal
         +'\n\nEl Total de tus prendas compradas es: '+costoTotal.toLocaleString()
-        +'\n\nGracias por tu compra!'
     )
+    cuotas(costoTotal)
 };
 
 const comprar = () =>{
